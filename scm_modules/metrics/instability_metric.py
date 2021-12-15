@@ -133,6 +133,4 @@ class InstabilityMetric:
         self._create_user_include_matrix()
         self._add_stl_includes()
         self._fill_include_matrix()
-        instability_metric = self._calculate_instability_for_each_file()
-
-        return instability_metric
+        return self._calculate_instability_for_each_file()

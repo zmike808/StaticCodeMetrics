@@ -32,9 +32,7 @@ def _create_env():
 
 def _get_module_files(src_dir):
     metrics_dir = Path.joinpath(Path.cwd().absolute(), src_dir)
-    metrics_files = [file for file in glob.glob(str(metrics_dir) + '**/*.py', recursive=True)]
-
-    return metrics_files
+    return list(glob.glob(str(metrics_dir) + '**/*.py', recursive=True))
 
 
 def _get_import_statements(import_definition):

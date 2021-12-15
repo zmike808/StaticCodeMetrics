@@ -18,20 +18,20 @@ def get_all_code_files(directory_path, allowed_file_extensions):
         return code_files
 
     for extension in allowed_file_extensions:
-        directory_content = [file for file in glob.glob(directory_path + "**/*." + extension, recursive=True)]
+        directory_content = list(
+            glob.glob(directory_path + "**/*." + extension, recursive=True)
+        )
+
 
         # add files of given extension to list
-        code_files += [file for file in directory_content]
+        code_files += list(directory_content)
 
     return code_files
 
 
 def extract_filename(filepath):
     ''' return the filename including the extension '''
-    # get last part of file_path
-    filename = Path(filepath).name
-
-    return filename
+    return Path(filepath).name
 
 
 def save_metric_to_file(metric, directory_path=''):
