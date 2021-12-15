@@ -40,7 +40,7 @@ def pad_data_series_with_default_values(data_series, data_series_to_pad):
 
     padded_data_series = data_series_to_pad
     for index_name in data_series.index:
-        if index_name not in data_series_to_pad:
+        if index_name not in padded_data_series:
             padded_data_series[index_name] = DEFAULT_PADDING_VALUE
 
     return padded_data_series

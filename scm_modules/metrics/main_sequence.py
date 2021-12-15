@@ -13,7 +13,7 @@ class MainSequence:
         self._instability_metric = None
         self._abstractness_metric = None
 
-    def _annotate_point(self, event, sc):  # noqa: C901
+    def _annotate_point(self, event, sc):    # noqa: C901
         ''' displays a text, if a user hovers over a point with the mouse '''
         fig = plt.gcf()
         visibility_changed = False
@@ -30,13 +30,11 @@ class MainSequence:
                         annotation.set_visible(False)
                         visibility_changed = True
 
-            # only one annotation available
             elif ind_array.size == 1:
                 if not self._annotation_points[ind_array[0]].get_visible():
                     self._annotation_points[ind_array[0]].set_visible(True)
                     visibility_changed = True
 
-            # more than one annotation available (display only one)
             else:
                 # again hovered over the same summary of points
                 if self._last_hov_anno_index in ind_array:
@@ -57,15 +55,13 @@ class MainSequence:
 
                     # set respective annotation visible
                     self._annotation_points[anno_ind].set_visible(True)
-                    visibility_changed = True
                     self._last_hov_anno_index = anno_ind
 
-                # hovered over another summary of points
                 else:
                     self._annotation_points[ind_array[0]].set_visible(True)
-                    visibility_changed = True
                     self._last_hov_anno_index = ind_array[0]
 
+                visibility_changed = True
         if visibility_changed:
             fig.canvas.draw_idle()
 

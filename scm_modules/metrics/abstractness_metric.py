@@ -11,7 +11,7 @@ class AbstractnessMetric:
         self._interface_class_matrix = pd.DataFrame(index=['N_a', 'N_c'], dtype=int)
         self._list_of_files = []
 
-    def _get_number_of_interfaces_and_classes_of_file(self, file_path):  # noqa: C901
+    def _get_number_of_interfaces_and_classes_of_file(self, file_path):    # noqa: C901
         ''' return the number of interfaces or classes present in given file.
         In C++, interfaces/abstract classes are defined using the virtual-keyword and/or one or more
         method equal to 0 (virtual void methodX() = 0;
@@ -46,11 +46,13 @@ class AbstractnessMetric:
                         nb_classes += 1
 
                     # find one abstract method
-                    if class_definition_found:
-                        if re.match(ProgrammingLanguageConfig.get_abstract_method_identifier(), line):
-                            # one virtual = 0 method is sufficient for an abstract class
-                            nb_interfaces += 1
-                            class_definition_found = False
+                    if class_definition_found and re.match(
+                        ProgrammingLanguageConfig.get_abstract_method_identifier(),
+                        line,
+                    ):
+                        # one virtual = 0 method is sufficient for an abstract class
+                        nb_interfaces += 1
+                        class_definition_found = False
 
         except FileNotFoundError as ex:
             warnings.warn('{} ...returning default values'.format(ex))
@@ -83,11 +85,7 @@ class AbstractnessMetric:
         # compute abstractness metric for each row
         for index in range(len(n_a)):
             # prevent division through 0
-            if n_c[index] == 0:
-                a[index] = 0
-            else:
-                a[index] = n_a[index] / n_c[index]
-
+            a[index] = 0 if n_c[index] == 0 else n_a[index] / n_c[index]
         return a
 
     def compute_abstractness(self):
@@ -103,6 +101,4 @@ class AbstractnessMetric:
 
         self._list_of_files = FileUtility.get_all_code_files(self._dir_path, allowed_file_extensions)
         self._search_files_for_interfaces()
-        abstractness_metric = self._calculate_abstractness_for_each_file()
-
-        return abstractness_metric
+        return self._calculate_abstractness_for_each_file()

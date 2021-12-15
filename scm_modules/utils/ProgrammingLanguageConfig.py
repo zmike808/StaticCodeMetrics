@@ -9,10 +9,7 @@ class LanguageOptionError(RuntimeError):
         self.args = arg
 
     def __str__(self):
-        error_string = ''
-        for chr in self.args:
-            error_string += chr
-
+        error_string = ''.join(self.args)
         return "LanguageOptionError: {}".format(error_string)
 
 
